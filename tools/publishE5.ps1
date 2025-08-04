@@ -9,7 +9,8 @@ git add -A
 $gitStatus = git status --porcelain | ForEach-Object { $_.Trim() }
 if ($gitStatus.Count -eq 0) {
     Write-Host "No changes to commit."
-} else {
+}
+else {
     $summary = "Commit: " + ($gitStatus -join ", ")
     git commit -m "$summary"
     $branch = git rev-parse --abbrev-ref HEAD
@@ -33,14 +34,17 @@ foreach ($folder in $solutionFolders) {
     Write-Host "Zipped $solName to $zipPath"
 
     # 3. Import to tenant (overwrite)
-    Write-Host ""
-    Write-Host "Importing $solName from $zipPath"
-    Write-Host ""
+    $importMsg = "Importing $solName from $zipPath"
+    Write-Host $importMsg
+    $importMsg | Out-File -Append -FilePath "$zipOutDir\import-log.txt"
+    Start-Sleep -Milliseconds 200
     try {
         pac solution import --path $zipPath --force-overwrite
         Write-Host "Imported $solName to tenant."
-    } catch {
+    }
+    catch {
         Write-Host ("Import failed for ${solName}: " + $_.Exception.Message)
+        ("Import failed for ${solName}: " + $_.Exception.Message) | Out-File -Append -FilePath "$zipOutDir\import-log.txt"
     }
 }
 
