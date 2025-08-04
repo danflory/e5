@@ -22,8 +22,9 @@ $solutionBase = "C:\d\e5\solutions"
 $zipOutDir = "C:\d\e5\.Solutions"
 New-Item -Type Directory -Force -Path $zipOutDir | Out-Null
 
-# Find all solution folders (each subfolder in $solutionBase)
-$solutionFolders = Get-ChildItem -Path $solutionBase -Directory
+
+# Find only valid solution folders (those containing Other\Solution.xml)
+$solutionFolders = Get-ChildItem -Path $solutionBase -Directory | Where-Object { Test-Path (Join-Path $_.FullName 'Other\Solution.xml') }
 foreach ($folder in $solutionFolders) {
     $solName = $folder.Name
     $zipPath = Join-Path $zipOutDir "$solName.zip"
@@ -32,6 +33,7 @@ foreach ($folder in $solutionFolders) {
     Write-Host "Zipped $solName to $zipPath"
 
     # 3. Import to tenant (overwrite)
+    Write-Host "Importing $solName from $zipPath"
     try {
         pac solution import --path $zipPath --force-overwrite
         Write-Host "Imported $solName to tenant."
