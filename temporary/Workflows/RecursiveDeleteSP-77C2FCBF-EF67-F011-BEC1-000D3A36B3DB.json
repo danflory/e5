@@ -1,0 +1,220 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_sharepointonline": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "dan_sharedsharepointonline_11aed"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "7ca88e93-6094-41a0-94f3-7a773b572129"
+          },
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "SiteAddress",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "https://tr1tw.sharepoint.com/sites/e5forDanflory",
+                  "x-ms-content-hint": "TEXT",
+                  "enum": [
+                    "https://tr1tw.sharepoint.com/sites/e5",
+                    "n"
+                  ]
+                },
+                "text_1": {
+                  "title": "FolderPath",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "/Documents/tmp",
+                  "x-ms-content-hint": "TEXT",
+                  "enum": [
+                    "/SharedDocuments/",
+                    "n"
+                  ]
+                },
+                "text_2": {
+                  "title": "Library",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Documents",
+                  "x-ms-content-hint": "TEXT",
+                  "enum": [
+                    "Documents",
+                    "n"
+                  ]
+                }
+              },
+              "required": []
+            }
+          }
+        }
+      },
+      "actions": {
+        "Get_files_(properties_only)": {
+          "runAfter": {
+            "Initialize_variable": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "a5af2861-f34c-4bdc-9548-c3fadda8acc1"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sharepointonline",
+              "operationId": "GetFileItems",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+            },
+            "parameters": {
+              "dataset": "@variables('Site')",
+              "table": "@variables('LIb')",
+              "folderPath": "@variables('Folder')",
+              "viewScopeOption": "Default"
+            },
+            "authentication": {
+              "type": "Raw",
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+            }
+          }
+        },
+        "Apply_to_each": {
+          "foreach": "@outputs('Get_files_(properties_only)')?['body/value']",
+          "actions": {
+            "if_Folder_Else_File": {
+              "actions": {
+                "Compose": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "8ab2f6c8-2364-4909-8b0b-25670ea1b274"
+                  },
+                  "type": "Compose",
+                  "inputs": "@{items('Apply_to_each')?['{FilenameWithExtension}']}\n@{item()?['FileRef']}\n"
+                }
+              },
+              "runAfter": {
+                "Compose_1": [
+                  "Succeeded"
+                ]
+              },
+              "expression": {
+                "and": [
+                  {
+                    "equals": [
+                      "@item()?['{IsFolder}']",
+                      true
+                    ]
+                  }
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "cc2a2a40-e2db-49a5-be70-319699a43949"
+              },
+              "type": "If"
+            },
+            "Compose_1": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "5bffae44-ccc0-4dae-9986-8f22ff8ff852"
+              },
+              "type": "Compose",
+              "inputs": "IsFolder @{item()?['{IsFolder}']}\nname: @{item()?['{FilenameWithExtension}']}"
+            }
+          },
+          "runAfter": {
+            "Get_files_(properties_only)": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "bfe7bb01-26b7-4dda-8678-7236e6ed8108"
+          },
+          "type": "Foreach"
+        },
+        "OptionalSite": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "1cbf66d0-cf27-4bac-a3ad-fef4f0518922"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Site",
+                "type": "string",
+                "value": "@{coalesce(triggerBody()?['SiteAddress'], 'https://tr1tw.sharepoint.com/sites/e5forDanflory')}"
+              }
+            ]
+          }
+        },
+        "optionalFolder": {
+          "runAfter": {
+            "OptionalSite": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "9bbc5a30-e149-4ea8-a301-a9bb2d7fa020"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Folder",
+                "type": "string",
+                "value": "@coalesce(triggerBody()?['FolderPath'], '/Shared Documents/tmp')"
+              }
+            ]
+          }
+        },
+        "Initialize_variable": {
+          "runAfter": {
+            "optionalFolder": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "c60ffae9-7a03-4a6c-8714-86e69dafb50a"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "LIb",
+                "type": "string",
+                "value": "@{coalesce(triggerBody()?['Library'], 'Documents')}"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

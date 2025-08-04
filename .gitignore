@@ -1,0 +1,3 @@
+# Ignore solution zip exports and logs
+*.zip
+logs/
