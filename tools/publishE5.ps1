@@ -33,7 +33,9 @@ foreach ($folder in $solutionFolders) {
     Write-Host "Zipped $solName to $zipPath"
 
     # 3. Import to tenant (overwrite)
+    Write-Host ""
     Write-Host "Importing $solName from $zipPath"
+    Write-Host ""
     try {
         pac solution import --path $zipPath --force-overwrite
         Write-Host "Imported $solName to tenant."
