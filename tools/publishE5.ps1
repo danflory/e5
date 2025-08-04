@@ -30,8 +30,9 @@ foreach ($folder in $solutionFolders) {
     $solName = $folder.Name
     $zipPath = Join-Path $zipOutDir "$solName.zip"
     if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
-    Compress-Archive -Path (Join-Path $folder.FullName '*') -DestinationPath $zipPath
-    Write-Host "Zipped $solName to $zipPath"
+    $otherPath = Join-Path $folder.FullName 'Other'
+    Compress-Archive -Path (Join-Path $otherPath '*') -DestinationPath $zipPath -Force
+    Write-Host "Zipped $solName to $zipPath (from $otherPath)"
 
     # 3. Import to tenant (overwrite)
     $importMsg = "Importing $solName from $zipPath"
