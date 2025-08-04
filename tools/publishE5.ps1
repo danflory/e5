@@ -28,12 +28,12 @@ foreach ($folder in $solutionFolders) {
     $solName = $folder.Name
     $zipPath = Join-Path $zipOutDir "$solName.zip"
     if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
-    Compress-Archive -Path $folder.FullName\* -DestinationPath $zipPath
+    Compress-Archive -Path (Join-Path $folder.FullName '*') -DestinationPath $zipPath
     Write-Host "Zipped $solName to $zipPath"
 
     # 3. Import to tenant (overwrite)
     try {
-        pac solution import --path $zipPath --overwrite true
+        pac solution import --path $zipPath --force-overwrite
         Write-Host "Imported $solName to tenant."
     } catch {
         Write-Host ("Import failed for ${solName}: " + $_.Exception.Message)
