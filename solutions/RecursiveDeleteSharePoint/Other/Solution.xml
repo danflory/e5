@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.25063.198" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25063.198" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.25064.00184">
+<ImportExportXml version="9.2.25065.188" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25065.188" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.25065.00188">
   <SolutionManifest>
     <UniqueName>RecursiveDeleteSharePoint</UniqueName>
     <LocalizedNames>
       <LocalizedName description="RecursiveDeleteSharePoint" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>1.0</Version>
+    <Version>1.1</Version>
     <Managed>0</Managed>
     <Publisher>
       <UniqueName>Dan</UniqueName>
@@ -81,7 +81,6 @@
     </Publisher>
     <RootComponents>
       <RootComponent type="29" id="{77c2fcbf-ef67-f011-bec1-000d3a36b3db}" behavior="0" />
-      <RootComponent type="29" id="{300A99F9-1768-F011-BEC1-000D3A36B3DB}" behavior="0" />
     </RootComponents>
     <MissingDependencies />
   </SolutionManifest>

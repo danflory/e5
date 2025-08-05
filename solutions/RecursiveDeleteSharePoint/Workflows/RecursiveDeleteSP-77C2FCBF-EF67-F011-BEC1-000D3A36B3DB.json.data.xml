@@ -24,6 +24,4 @@
   <LocalizedNames>
     <LocalizedName languagecode="1033" description="RecursiveDeleteSP" />
   </LocalizedNames>
-  <IsTransacted>1</IsTransacted>
-</Workflow>
 </Workflow>

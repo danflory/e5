@@ -1,57 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25063.198" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.25064.00184">
+<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25065.188" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.25065.00188">
   <Entities />
   <Roles />
-  <Workflows>
-    <Workflow>
-      <WorkflowId>{300A99F9-1768-F011-BEC1-000D3A36B3DB}</WorkflowId>
-      <Name>SumarizeLibrary</Name>
-      <Type>1</Type>
-      <Category>0</Category>
-      <PrimaryEntityName />
-      <Subprocess>false</Subprocess>
-      <Description />
-      <Scope>1</Scope>
-      <OwnerId xsi:nil="true" />
-      <OwnerIdType xsi:nil="true" />
-      <StateCode>1</StateCode>
-      <StatusCode>2</StatusCode>
-      <OnDemand>true</OnDemand>
-      <WorkflowRunAs>0</WorkflowRunAs>
-      <BusinessProcessType>0</BusinessProcessType>
-      <TriggerOnCreate>false</TriggerOnCreate>
-      <TriggerOnDelete>false</TriggerOnDelete>
-      <TriggerOnUpdate>false</TriggerOnUpdate>
-      <TriggerOnAssign>false</TriggerOnAssign>
-      <TriggerOnStateChange>false</TriggerOnStateChange>
-      <TriggerOnStatusChange>false</TriggerOnStatusChange>
-      <SyncWorkflowLogOnFailure>false</SyncWorkflowLogOnFailure>
-      <ClientData />
-      <Xaml />
-      <InputParameters />
-      <OutputParameters />
-      <StageName />
-      <ProcessOrder>0</ProcessOrder>
-      <WorkflowEntityId xsi:nil="true" />
-      <ActiveWorkflowId xsi:nil="true" />
-      <ParentWorkflowId xsi:nil="true" />
-      <ParentWorkflowTypeCode xsi:nil="true" />
-      <IsTransacted>false</IsTransacted>
-      <WorkflowBusinessProcessFlowId xsi:nil="true" />
-      <RendererType>0</RendererType>
-      <IsTemplate>false</IsTemplate>
-      <IsCustomizable>1</IsCustomizable>
-      <IsManaged>0</IsManaged>
-      <OverwriteTime xsi:nil="true" />
-      <IntroducedVersion>1.0.0.0</IntroducedVersion>
-      <VersionNumber>1</VersionNumber>
-      <CreatedOn>2025-08-04T00:00:00Z</CreatedOn>
-      <ModifiedOn>2025-08-04T00:00:00Z</ModifiedOn>
-      <CreatedBy xsi:nil="true" />
-      <ModifiedBy xsi:nil="true" />
-      <OrganizationId xsi:nil="true" />
-    </Workflow>
-  </Workflows>
+  <Workflows />
   <FieldSecurityProfiles />
   <Templates />
   <EntityMaps />
