@@ -1,3 +1,5 @@
 # Ignore solution zip exports and logs
 *.zip
 logs/
+.Solutions/import-log.txt
+/.Solutions/import-log.txt
